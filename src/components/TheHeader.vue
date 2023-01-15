@@ -1,7 +1,12 @@
 <template>
   <header class="flex justify-between fixed z-30 w-full">
     <div class="lg:w-1/4 flex">
-      <LogoMain />
+      <div class="flex items-center xl:w-64 xl:bg-white pl-4">
+        <button class="mr-3 sm:ml-2 sm:mr-6 focus:outline-none">
+          <BaseIcon name="logo" />
+        </button>
+        <LogoMain />
+      </div>
     </div>
     <div
       class="hidden sm:flex items-center justify-end p-2.5 pl-8 md:pl-12 md:px-8 flex-1 lg:px-0 lg:w-1/2 max-w-screen-md"
