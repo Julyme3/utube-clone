@@ -20,6 +20,9 @@
     <aside
       v-show="isOpen"
       class="w-64 max-h-screen overflow-auto bg-white fixed z-40"
+      ref="mobileSidebar"
+      tabindex="-1"
+      @keydown.esc="$emit('close')"
     >
       <section class="flex items-center p-4 border-b sticky top-0 bg-white">
         <button @click="$emit('close')" class="ml-2 mr-6 focus:outline-none">
@@ -45,6 +48,11 @@ export default {
   },
   emits: {
     close: null,
+  },
+  watch: {
+    isOpen() {
+      this.$nextTick(() => this.isOpen && this.$refs.mobileSidebar.focus());
+    },
   },
 };
 </script>
