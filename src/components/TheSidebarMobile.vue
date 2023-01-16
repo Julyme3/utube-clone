@@ -6,7 +6,7 @@
     leave-active-class="transition-opacity ease-linear duration-200"
     leave-from-class="opacity-100"
     leave-to-class="opacity-0"
-    ><SidebarOverlay v-show="isOpen" @click="isOpen = false"></SidebarOverlay
+    ><SidebarOverlay v-show="isOpen" @click="$emit('close')"></SidebarOverlay
   ></transition>
 
   <transition
@@ -22,7 +22,7 @@
       class="w-64 max-h-screen overflow-auto bg-white fixed z-40"
     >
       <section class="flex items-center p-4 border-b sticky top-0 bg-white">
-        <button @click="isOpen = false" class="ml-2 mr-6 focus:outline-none">
+        <button @click="$emit('close')" class="ml-2 mr-6 focus:outline-none">
           <BaseIcon name="menu" />
         </button>
         <LogoMain />
@@ -40,10 +40,11 @@ import LogoMain from './LogoMain.vue';
 export default {
   name: 'TheSidebarMobile',
   components: { LogoMain, BaseIcon, SidebarContent, SidebarOverlay },
-  data() {
-    return {
-      isOpen: true,
-    };
+  props: {
+    isOpen: Boolean,
+  },
+  emits: {
+    close: null,
   },
 };
 </script>
