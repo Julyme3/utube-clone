@@ -106,7 +106,7 @@
 
 <script>
 export default {
-  name: 'TheSidebarSmall',
+  name: 'TheSidebarCompact',
   props: {
     isOpen: Boolean,
   },

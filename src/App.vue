@@ -1,6 +1,6 @@
 <template>
   <TheHeader @toggleSidebar="toggleSidebar" />
-  <TheSidebarSmall v-if="isCompactSidebarOpen" />
+  <TheSidebarCompact v-if="isCompactSidebarOpen" />
   <TheSidebar v-if="isSidebarOpen" />
   <TheSidebarMobile :isOpen="isMobileSidebarOpen" @close="closeMobileSidebar" />
   <TheCategories :isSidebarOpen="isSidebarOpen" />
@@ -12,7 +12,7 @@ import TheSidebarMobile from './components/TheSidebarMobile.vue';
 import TheCategories from './components/TheCategories.vue';
 import TheVideos from './components/TheVideos.vue';
 import TheSidebar from './components/TheSidebar.vue';
-import TheSidebarSmall from './components/TheSidebarSmall.vue';
+import TheSidebarCompact from './components/TheSidebarCompact.vue';
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
     TheCategories,
     TheSidebarMobile,
     TheHeader,
-    TheSidebarSmall,
+    TheSidebarCompact,
     TheSidebar,
   },
   data() {
