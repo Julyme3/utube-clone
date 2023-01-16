@@ -1,10 +1,10 @@
 <template>
   <TheHeader @toggleSidebar="toggleSidebar" />
-  <TheSidebarSmall :isOpen="sidebarState === 'compact'" />
-  <TheSidebar :isOpen="sidebarState === 'normal'" />
+  <TheSidebarSmall v-if="isCompactSidebarOpen" />
+  <TheSidebar v-if="isSidebarOpen" />
   <TheSidebarMobile :isOpen="isMobileSidebarOpen" @close="closeMobileSidebar" />
-  <TheCategories :isSidebarOpen="sidebarState === 'normal'" />
-  <TheVideos :isSidebarOpen="sidebarState === 'normal'" />
+  <TheCategories :isSidebarOpen="isSidebarOpen" />
+  <TheVideos :isSidebarOpen="isSidebarOpen" />
 </template>
 <script>
 import TheHeader from './components/TheHeader.vue';
@@ -26,26 +26,47 @@ export default {
   data() {
     return {
       isMobileSidebarOpen: false,
-      sidebarState: null,
+      isCompactSidebarActive: false,
+      isSidebarOpen: false,
+      isCompactSidebarOpen: false,
     };
   },
   mounted() {
     const windowWidth = window.innerWidth;
     if (windowWidth >= 768 && windowWidth < 1280) {
-      this.sidebarState = 'compact';
+      this.isCompactSidebarActive = true;
     }
 
     if (windowWidth >= 1280) {
-      this.sidebarState = 'normal';
+      this.isCompactSidebarActive = false;
     }
+
+    this.onResize();
+
+    window.addEventListener('resize', this.onResize);
   },
   methods: {
+    onResize() {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth < 768) {
+        this.isCompactSidebarOpen = false;
+        this.isSidebarOpen = false;
+      } else if (windowWidth < 1280) {
+        this.isCompactSidebarOpen = true;
+        this.isSidebarOpen = false;
+      } else {
+        this.isCompactSidebarOpen = this.isCompactSidebarActive;
+        this.isSidebarOpen = !this.isCompactSidebarActive;
+      }
+    },
     toggleSidebar() {
       const windowWidth = window.innerWidth;
 
       if (windowWidth >= 1280) {
-        this.sidebarState =
-          this.sidebarState === 'compact' ? 'normal' : 'compact';
+        this.isCompactSidebarActive = !this.isCompactSidebarActive;
+
+        this.onResize();
       } else {
         this.openMobileSidebar();
       }
