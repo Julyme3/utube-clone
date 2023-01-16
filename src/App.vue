@@ -1,10 +1,10 @@
 <template>
-  <TheHeader @openMobileSidebar="openMobileSidebar" />
-  <TheSidebarSmall />
-  <TheSidebar />
+  <TheHeader @toggleSidebar="toggleSidebar" />
+  <TheSidebarSmall :isOpen="sidebarState === 'compact'" />
+  <TheSidebar :isOpen="sidebarState === 'normal'" />
   <TheSidebarMobile :isOpen="isMobileSidebarOpen" @close="closeMobileSidebar" />
-  <TheCategories />
-  <TheVideos />
+  <TheCategories :isSidebarOpen="sidebarState === 'normal'" />
+  <TheVideos :isSidebarOpen="sidebarState === 'normal'" />
 </template>
 <script>
 import TheHeader from './components/TheHeader.vue';
@@ -26,9 +26,30 @@ export default {
   data() {
     return {
       isMobileSidebarOpen: false,
+      sidebarState: null,
     };
   },
+  mounted() {
+    const windowWidth = window.innerWidth;
+    if (windowWidth >= 768 && windowWidth < 1280) {
+      this.sidebarState = 'compact';
+    }
+
+    if (windowWidth >= 1280) {
+      this.sidebarState = 'normal';
+    }
+  },
   methods: {
+    toggleSidebar() {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth >= 1280) {
+        this.sidebarState =
+          this.sidebarState === 'compact' ? 'normal' : 'compact';
+      } else {
+        this.openMobileSidebar();
+      }
+    },
     openMobileSidebar() {
       this.isMobileSidebarOpen = true;
     },
