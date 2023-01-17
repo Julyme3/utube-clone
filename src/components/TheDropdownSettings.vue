@@ -13,6 +13,9 @@
     >
       <div
         v-show="isOpen"
+        ref="dropdown"
+        tabindex="-1"
+        @keydown.esc="isOpen = false"
         class="absolute top-9 -right-full sm:right-0 bg-white w-72 border border-t-0"
       >
         <section class="py-2 border-b">
@@ -109,6 +112,11 @@ export default {
         this.isOpen = false;
       }
     });
+  },
+  watch: {
+    isOpen() {
+      this.$nextTick(() => this.isOpen && this.$refs.dropdown.focus());
+    },
   },
 };
 </script>
