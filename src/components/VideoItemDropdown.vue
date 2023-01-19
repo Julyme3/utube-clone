@@ -13,7 +13,7 @@
         ref="dropdown"
         tabindex="-1"
         @keydown.esc="isOpen = false"
-        class="absolute top-9 -right-full sm:right-0 bg-white w-48 rounded shadow focus:outline-none"
+        :class="dropdownClasses"
       >
         <section class="py-2">
           <ul>
@@ -22,10 +22,7 @@
         </section>
       </div>
     </transition>
-    <button
-      @click="isOpen = !isOpen"
-      class="-mt-1 ml-auto p-1 opacity-0 group-hover:opacity-100 text-gray-500 hover:text-gray-700 focus:outline-none"
-    >
+    <button @click="toggle" :class="buttonClasses">
       <BaseIcon name="dotsVertical" />
     </button>
   </div>
@@ -43,7 +40,34 @@ export default {
   data() {
     return {
       isOpen: false,
+      positionClasses: [],
     };
+  },
+  computed: {
+    buttonClasses() {
+      return [
+        '-mt-1',
+        'ml-auto',
+        'p-1',
+        'opacity-0',
+        'group-hover:opacity-100',
+        'text-gray-500',
+        'hover:text-gray-700',
+        'focus:outline-none',
+      ];
+    },
+    dropdownClasses() {
+      return [
+        'z-10',
+        'absolute',
+        'bg-white',
+        'w-48',
+        'rounded',
+        'shadow',
+        'focus:outline-none',
+        ...this.positionClasses,
+      ];
+    },
   },
   mounted() {
     window.addEventListener('click', (e) => {
@@ -51,6 +75,85 @@ export default {
         this.isOpen = false;
       }
     });
+  },
+  methods: {
+    toggle(e) {
+      this.isOpen = !this.isOpen;
+
+      if (this.isOpen) {
+        this.$nextTick(
+          () => (this.positionClasses = this.getPositionClasses(e))
+        );
+      }
+    },
+    getPositionClasses(e) {
+      return [
+        this.getTopClasses(e),
+        this.getRightClasses(e),
+        this.getLeftClass(e),
+      ];
+    },
+    getTopClasses(e) {
+      const clickCoordY = e.clientY;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      const buttonHeight = e.currentTarget.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      if (windowHeight - clickCoordY < dropdownHeight) {
+        return '-top-14';
+      }
+
+      if (windowHeight - clickCoordY < dropdownHeight + buttonHeight) {
+        return 'top-0';
+      }
+
+      return 'top-9';
+    },
+    getRightClasses(e) {
+      const clickCoordX = e.clientX;
+      const clickCoordY = e.clientY;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      const dropdownWidth = this.$refs.dropdown.offsetWidth;
+      const buttonHeight = e.currentTarget.offsetHeight;
+      const windowWidth = window.innerWidth;
+      const windowHeight = window.innerHeight;
+
+      if (windowWidth - clickCoordX > dropdownWidth) {
+        return 'right-auto';
+      }
+
+      if (windowHeight - clickCoordY > dropdownHeight + buttonHeight) {
+        return 'right-0';
+      }
+
+      if (windowHeight - clickCoordY > dropdownHeight) {
+        return 'right-8';
+      }
+
+      return 'right-0';
+    },
+    getLeftClass(e) {
+      const clickCoordX = e.clientX;
+      const clickCoordY = e.clientY;
+      const buttonHeight = e.currentTarget.offsetHeight;
+      const dropdownWidth = this.$refs.dropdown.offsetWidth;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth - clickCoordX < dropdownWidth) {
+        return 'left-auto';
+      }
+
+      if (windowWidth - clickCoordY < dropdownHeight) {
+        return 'left-auto';
+      }
+
+      if (windowWidth - clickCoordY > dropdownHeight + buttonHeight) {
+        return 'left-auto';
+      }
+
+      return 'left-8';
+    },
   },
   watch: {
     isOpen() {
