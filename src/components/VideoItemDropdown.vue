@@ -46,14 +46,12 @@ export default {
   computed: {
     buttonClasses() {
       return [
-        '-mt-1',
-        'ml-auto',
         'p-1',
-        'opacity-0',
-        'group-hover:opacity-100',
         'text-gray-500',
         'hover:text-gray-700',
         'focus:outline-none',
+        this.isOpen ? 'opacity-100' : 'opacity-0',
+        'group-hover:opacity-100',
       ];
     },
     dropdownClasses() {
@@ -89,6 +87,7 @@ export default {
     getPositionClasses(e) {
       return [
         this.getTopClasses(e),
+        this.getBottomClass(e),
         this.getRightClasses(e),
         this.getLeftClass(e),
       ];
@@ -100,7 +99,7 @@ export default {
       const windowHeight = window.innerHeight;
 
       if (windowHeight - clickCoordY < dropdownHeight) {
-        return '-top-14';
+        return 'top-auto';
       }
 
       if (windowHeight - clickCoordY < dropdownHeight + buttonHeight) {
@@ -108,6 +107,14 @@ export default {
       }
 
       return 'top-9';
+    },
+    getBottomClass(event) {
+      const clickCoordY = event.clientY;
+      const dropdownHeight = this.$refs.dropdown.offsetHeight;
+      if (window.innerHeight - clickCoordY < dropdownHeight) {
+        return 'bottom-9';
+      }
+      return 'buttom-auto';
     },
     getRightClasses(e) {
       const clickCoordX = e.clientX;
