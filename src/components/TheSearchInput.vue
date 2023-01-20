@@ -9,6 +9,11 @@
 <script>
 export default {
   name: 'TheSearchInput',
+  mounted() {
+    if (window.innerWidth < 640) {
+      this.$el.focus();
+    }
+  },
 };
 </script>
 
