@@ -1,6 +1,11 @@
 <template>
   <div class="relative">
-    <div class="h-full" @mouseenter="toggle" @mouseleave="toggle">
+    <div
+      class="flex items-center h-full"
+      @mouseenter="isShown = true"
+      @mouseleave="isShown = false"
+      @click="isShown = false"
+    >
       <slot />
     </div>
     <transition
@@ -21,6 +26,7 @@ export default {
   name: 'BaseTooltip',
   props: {
     text: String,
+    top: Boolean,
   },
   data() {
     return {
@@ -38,16 +44,11 @@ export default {
         'whitespace-nowrap',
         'p-2',
         'absolute',
-        'top-14',
         'left-1/2',
         'transform',
         '-translate-x-1/2',
+        this.top ? 'bottom-12' : 'top-14',
       ];
-    },
-  },
-  methods: {
-    toggle() {
-      this.isShown = !this.isShown;
     },
   },
 };

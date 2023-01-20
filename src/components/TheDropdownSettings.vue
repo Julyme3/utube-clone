@@ -18,7 +18,7 @@
         ref="dropdown"
         tabindex="-1"
         @keydown.esc="isOpen = false"
-        class="absolute top-9 -right-full sm:right-0 bg-white w-72 border border-t-0"
+        :class="dropdownClasses"
       >
         <section class="py-2 border-b">
           <ul>
@@ -102,6 +102,18 @@ export default {
         },
       ],
       isOpen: false,
+      dropdownClasses: [
+        'z-10',
+        'absolute',
+        'top-9',
+        '-right-full',
+        'sm:right-0',
+        'bg-white',
+        'w-72',
+        'border',
+        'border-t-0',
+        'focus:outline-none',
+      ],
     };
   },
   computed: {
