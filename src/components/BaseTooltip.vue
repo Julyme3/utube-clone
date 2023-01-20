@@ -27,6 +27,8 @@ export default {
   props: {
     text: String,
     top: Boolean,
+    left: Boolean,
+    right: Boolean,
   },
   data() {
     return {
@@ -35,7 +37,7 @@ export default {
   },
   computed: {
     classes() {
-      return [
+      const defaultClasses = [
         'bg-gray-600',
         'bg-opacity-80',
         'rounded-sm',
@@ -44,11 +46,19 @@ export default {
         'whitespace-nowrap',
         'p-2',
         'absolute',
-        'left-1/2',
         'transform',
-        '-translate-x-1/2',
         this.top ? 'bottom-12' : 'top-14',
       ];
+
+      if (this.right) {
+        return [...defaultClasses, 'left-0'];
+      }
+
+      if (this.left) {
+        return [...defaultClasses, 'right-0'];
+      }
+
+      return [...defaultClasses, 'left-1/2', '-translate-x-1/2'];
     },
   },
 };
