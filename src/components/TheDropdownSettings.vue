@@ -20,26 +20,13 @@
         @keydown.esc="isOpen = false"
         :class="dropdownClasses"
       >
-        <section class="py-2 border-b">
-          <ul>
-            <DropdownSettingsListItem
-              v-for="listItem in listItems.slice(0, listItems.length - 1)"
-              :key="listItem.label"
-              :label="listItem.label"
-              :icon="listItem.icon"
-              :withSubMenu="listItem.withSubMenu"
-            />
-          </ul>
-        </section>
-        <section class="py-2">
-          <ul>
-            <DropdownSettingsListItem
-              :label="lastListItem.label"
-              :icon="lastListItem.icon"
-              :withSubMenu="lastListItem.withSubMenu"
-            />
-          </ul>
-        </section>
+        <TheDropdownSettingsMain
+          v-if="selectedMenu === 'main'"
+          @select-menu="showSelectedMenu"
+        />
+        <TheDropdownSettingsAppearance
+          v-else-if="selectedMenu === 'appearance'"
+        />
       </div>
     </transition>
   </div>
@@ -47,60 +34,20 @@
 
 <script>
 import BaseIcon from './BaseIcon.vue';
-import DropdownSettingsListItem from './DropdownSettingsListItem.vue';
 import BaseTooltip from './BaseTooltip.vue';
+import TheDropdownSettingsMain from './TheDropdownSettingsMain.vue';
+import TheDropdownSettingsAppearance from './TheDropdownSettingsAppearance.vue';
 export default {
   name: 'TheDropdownSettings',
-  components: { BaseTooltip, DropdownSettingsListItem, BaseIcon },
+  components: {
+    TheDropdownSettingsMain,
+    BaseTooltip,
+    BaseIcon,
+    TheDropdownSettingsAppearance,
+  },
   data() {
     return {
-      listItems: [
-        {
-          label: 'Appearance: Light',
-          icon: 'sun',
-          withSubMenu: true,
-        },
-        {
-          label: 'Language: English',
-          icon: 'language',
-          withSubMenu: true,
-        },
-        {
-          label: 'Location: Ukraine',
-          icon: 'location',
-          withSubMenu: true,
-        },
-        {
-          label: 'Settings',
-          icon: 'settings',
-          withSubMenu: false,
-        },
-        {
-          label: 'Your data in YouTube',
-          icon: 'checkMark',
-          withSubMenu: false,
-        },
-        {
-          label: 'Help',
-          icon: 'questionMark',
-          withSubMenu: false,
-        },
-        {
-          label: 'Send feedback',
-          icon: 'message',
-          withSubMenu: false,
-        },
-        {
-          label: 'Keyboard shortcuts',
-          icon: 'keyboard',
-          withSubMenu: false,
-        },
-        {
-          label: 'Restricted Mode: Off',
-          icon: null,
-          withSubMenu: true,
-        },
-      ],
+      selectedMenu: 'main',
       isOpen: false,
       dropdownClasses: [
         'z-10',
@@ -116,11 +63,6 @@ export default {
       ],
     };
   },
-  computed: {
-    lastListItem() {
-      return this.listItems[this.listItems.length - 1];
-    },
-  },
   mounted() {
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target) && this.isOpen) {
@@ -131,6 +73,11 @@ export default {
   watch: {
     isOpen() {
       this.$nextTick(() => this.isOpen && this.$refs.dropdown.focus());
+    },
+  },
+  methods: {
+    showSelectedMenu(selectedMenu) {
+      this.selectedMenu = selectedMenu;
     },
   },
 };
