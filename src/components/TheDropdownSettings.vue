@@ -1,7 +1,7 @@
 <template>
   <div class="relative">
     <BaseTooltip text="Settings">
-      <button @click="isOpen = !isOpen" class="relative p-2 focus:outline-none">
+      <button @click="toggle" class="relative p-2 focus:outline-none">
         <BaseIcon name="dotsVertical" class="w-5 h-5" />
       </button>
     </BaseTooltip>
@@ -17,7 +17,7 @@
         v-show="isOpen"
         ref="dropdown"
         tabindex="-1"
-        @keydown.esc="isOpen = false"
+        @keydown.esc="close"
         :class="dropdownClasses"
       >
         <TheDropdownSettingsMain
@@ -26,6 +26,7 @@
         />
         <TheDropdownSettingsAppearance
           v-else-if="selectedMenu === 'appearance'"
+          @select-menu="showSelectedMenu"
         />
       </div>
     </transition>
@@ -66,7 +67,7 @@ export default {
   mounted() {
     window.addEventListener('click', (e) => {
       if (!this.$el.contains(e.target) && this.isOpen) {
-        this.isOpen = false;
+        this.close();
       }
     });
   },
@@ -78,6 +79,18 @@ export default {
   methods: {
     showSelectedMenu(selectedMenu) {
       this.selectedMenu = selectedMenu;
+      this.$refs.dropdown.focus();
+    },
+    close() {
+      this.isOpen = false;
+
+      setTimeout(() => (this.selectedMenu = 'main'), 100);
+    },
+    open() {
+      this.isOpen = true;
+    },
+    toggle() {
+      this.isOpen ? this.close() : this.open();
     },
   },
 };
