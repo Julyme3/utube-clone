@@ -1,13 +1,8 @@
 <template>
-  <section class="flex border-b border-gray-200 text-black">
-    <button
-      @click.stop="$emit('select-menu', 'main')"
-      class="px-3 focus:outline-none"
-    >
-      <BaseIcon name="arrowLeft" />
-    </button>
-    <span class="py-3">Appearance</span>
-  </section>
+  <DropdownSettingsHeader
+    title="Appearance"
+    @back="$emit('select-menu', 'main')"
+  />
   <section class="py-2 border-b">
     <div class="text-gray-500 text-xs p-3">
       Setting applies to this browser only
@@ -27,9 +22,11 @@
 <script>
 import DropdownSettingsListItem from './DropdownSettingsListItem.vue';
 import BaseIcon from './BaseIcon.vue';
+import DropdownSettingsHeader from './DropdownSettingsHeader.vue';
 export default {
   name: 'TheDropdownSettingsAppearance',
   components: {
+    DropdownSettingsHeader,
     DropdownSettingsListItem,
     BaseIcon,
   },
