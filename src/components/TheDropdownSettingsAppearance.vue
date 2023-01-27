@@ -9,11 +9,11 @@
     </div>
     <ul>
       <DropdownSettingsListItem
-        v-for="(theme, id) in themes.slice(0, 8)"
-        :key="id"
-        :label="theme"
-        :active="id === selectedThemeId"
-        @click="selectedThemeId = id"
+        v-for="(themeName, themeId) in themes.slice(0, 8)"
+        :key="themeId"
+        :label="themeName"
+        :active="themeId === selectedThemeId"
+        @click="selectedThemeId = themeId"
       />
     </ul>
   </section>
