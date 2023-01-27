@@ -17,6 +17,7 @@
         :label="lastListItem.label"
         :icon="lastListItem.icon"
         :withSubMenu="lastListItem.withSubMenu"
+        @click.stop="$emit('select-menu', lastListItem.id)"
       />
     </ul>
   </section>
