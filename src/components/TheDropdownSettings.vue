@@ -20,7 +20,12 @@
         @keydown.esc="close"
         :class="dropdownClasses"
       >
-        <component :is="menu" @select-menu="showSelectedMenu" />
+        <component
+          :is="menu"
+          :selected-options="selectedOptions"
+          @select-menu="showSelectedMenu"
+          @select-option="selectOption"
+        />
       </div>
     </transition>
   </div>
@@ -61,6 +66,12 @@ export default {
         'border-t-0',
         'focus:outline-none',
       ],
+      selectedOptions: {
+        themeId: 0,
+        languageId: 0,
+        locationId: 0,
+        restrictedMode: false,
+      },
     };
   },
   mounted() {
@@ -103,6 +114,9 @@ export default {
     },
     toggle() {
       this.isOpen ? this.close() : this.open();
+    },
+    selectOption(option) {
+      this.selectedOptions[option.name] = option.value;
     },
   },
 };

@@ -12,8 +12,8 @@
         v-for="(themeName, themeId) in themes.slice(0, 8)"
         :key="themeId"
         :label="themeName"
-        :active="themeId === selectedThemeId"
-        @click="selectedThemeId = themeId"
+        :active="themeId === selectedOptions.themeId"
+        @click="selectOption(themeId)"
       />
     </ul>
   </section>
@@ -30,12 +30,17 @@ export default {
     DropdownSettingsListItem,
     BaseIcon,
   },
-  emits: ['select-menu'],
+  props: ['selectedOptions'],
+  emits: ['select-menu', 'select-option'],
   data() {
     return {
       themes: ['Use device theme', 'Dark theme', 'Light theme'],
-      selectedThemeId: 0,
     };
+  },
+  methods: {
+    selectOption(themeId) {
+      this.$emit('select-option', { name: 'themeId', value: themeId });
+    },
   },
 };
 </script>
