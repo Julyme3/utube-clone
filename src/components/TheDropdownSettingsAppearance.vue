@@ -1,8 +1,5 @@
 <template>
-  <DropdownSettingsHeader
-    title="Appearance"
-    @back="$emit('select-menu', 'main')"
-  />
+  <DropdownSettingsHeader title="Appearance" @back="$emit('close')" />
   <section class="py-2 border-b">
     <div class="text-gray-500 text-xs p-3">
       Setting applies to this browser only
@@ -31,7 +28,7 @@ export default {
     BaseIcon,
   },
   props: ['selectedOptions'],
-  emits: ['select-menu', 'select-option'],
+  emits: ['close', 'select-option'],
   data() {
     return {
       themes: ['Device theme', 'Dark theme', 'Light theme'],

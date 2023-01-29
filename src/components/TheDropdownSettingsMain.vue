@@ -2,22 +2,22 @@
   <section class="py-2 border-b">
     <ul>
       <DropdownSettingsListItem
-        v-for="listItem in listItems.slice(0, listItems.length - 1)"
-        :key="listItem.label"
-        :label="listItem.label"
-        :icon="listItem.icon"
-        :withSubMenu="listItem.withSubMenu"
-        @click.stop="selectMenu(listItem)"
+        v-for="menuItem in menuItems.slice(0, menuItems.length - 1)"
+        :key="menuItem.label"
+        :label="menuItem.label"
+        :icon="menuItem.icon"
+        :withSubMenu="menuItem.withSubMenu"
+        @click.stop="selectMenu(menuItem)"
       />
     </ul>
   </section>
   <section class="py-2">
     <ul>
       <DropdownSettingsListItem
-        :label="lastListItem.label"
-        :icon="lastListItem.icon"
-        :withSubMenu="lastListItem.withSubMenu"
-        @click.stop="selectMenu(lastListItem)"
+        :label="lastMenuItem.label"
+        :icon="lastMenuItem.icon"
+        :withSubMenu="lastMenuItem.withSubMenu"
+        @click.stop="selectMenu(lastMenuItem)"
       />
     </ul>
   </section>
@@ -30,77 +30,17 @@ export default {
   components: {
     DropdownSettingsListItem,
   },
-  props: ['selectedOptions'],
-  emits: ['select-menu', 'select-option'],
-  data() {
-    return {
-      listItems: [
-        {
-          id: 'appearance',
-          label: `Appearance: ${this.selectedOptions.theme.text}`,
-          icon: 'sun',
-          withSubMenu: true,
-        },
-        {
-          id: 'language',
-          label: `Language: ${this.selectedOptions.language.text}`,
-          icon: 'language',
-          withSubMenu: true,
-        },
-        {
-          id: 'location',
-          label: `Location: ${this.selectedOptions.location.text}`,
-          icon: 'location',
-          withSubMenu: true,
-        },
-        {
-          id: 'settings',
-          label: 'Settings',
-          icon: 'settings',
-          withSubMenu: false,
-        },
-        {
-          id: 'your_data_in_youtube',
-          label: 'Your data in YouTube',
-          icon: 'checkMark',
-          withSubMenu: false,
-        },
-        {
-          id: 'help',
-          label: 'Help',
-          icon: 'questionMark',
-          withSubMenu: false,
-        },
-        {
-          id: 'send_feedback',
-          label: 'Send feedback',
-          icon: 'message',
-          withSubMenu: false,
-        },
-        {
-          id: 'keyboard_shortcuts',
-          label: 'Keyboard shortcuts',
-          icon: 'keyboard',
-          withSubMenu: false,
-        },
-        {
-          id: 'restricted_mode',
-          label: `Restricted Mode: ${this.selectedOptions.restrictedMode.text}`,
-          icon: null,
-          withSubMenu: true,
-        },
-      ],
-    };
-  },
+  props: ['menuItems'],
+  emits: ['select-menu'],
   computed: {
-    lastListItem() {
-      return this.listItems[this.listItems.length - 1];
+    lastMenuItem() {
+      return this.menuItems[this.menuItems.length - 1];
     },
   },
   methods: {
-    selectMenu(listItem) {
-      if (listItem.withSubMenu) {
-        this.$emit('select-menu', listItem.id);
+    selectMenu(menuItem) {
+      if (menuItem.withSubMenu) {
+        this.$emit('select-menu', menuItem);
       }
     },
   },

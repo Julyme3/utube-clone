@@ -1,8 +1,5 @@
 <template>
-  <DropdownSettingsHeader
-    title="Choose your location"
-    @back="$emit('select-menu', 'main')"
-  />
+  <DropdownSettingsHeader title="Choose your location" @back="$emit('close')" />
   <section class="py-2">
     <ul>
       <DropdownSettingsListItem
@@ -26,7 +23,7 @@ export default {
     DropdownSettingsListItem,
   },
   props: ['selectedOptions'],
-  emits: ['select-menu', 'select-option'],
+  emits: ['close', 'select-option'],
   data() {
     return {
       locations: ['United States', 'Russia'],
