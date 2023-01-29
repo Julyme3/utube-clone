@@ -12,7 +12,12 @@
       <label for="restrictedMode" class="uppercase mr-2"
         >Activate restricted mode</label
       >
-      <input id="restrictedMode" type="checkbox" />
+      <input
+        id="restrictedMode"
+        type="checkbox"
+        :checked="selectedOptions.restrictedMode"
+        @input="selectOption"
+      />
     </div>
   </section>
 </template>
@@ -24,6 +29,15 @@ export default {
   components: {
     DropdownSettingsHeader,
   },
-  emits: ['select-menu'],
+  props: ['selectedOptions'],
+  emits: ['select-menu', 'select-option'],
+  methods: {
+    selectOption(e) {
+      this.$emit('select-option', {
+        name: 'restrictedMode',
+        value: e.target.checked,
+      });
+    },
+  },
 };
 </script>
