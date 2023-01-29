@@ -7,7 +7,7 @@
         :label="listItem.label"
         :icon="listItem.icon"
         :withSubMenu="listItem.withSubMenu"
-        @click.stop="$emit('select-menu', listItem.id)"
+        @click.stop="selectMenu(listItem)"
       />
     </ul>
   </section>
@@ -17,7 +17,7 @@
         :label="lastListItem.label"
         :icon="lastListItem.icon"
         :withSubMenu="lastListItem.withSubMenu"
-        @click.stop="$emit('select-menu', lastListItem.id)"
+        @click.stop="selectMenu(lastListItem)"
       />
     </ul>
   </section>
@@ -94,6 +94,13 @@ export default {
   computed: {
     lastListItem() {
       return this.listItems[this.listItems.length - 1];
+    },
+  },
+  methods: {
+    selectMenu(listItem) {
+      if (listItem.withSubMenu) {
+        this.$emit('select-menu', listItem.id);
+      }
     },
   },
 };
