@@ -37,19 +37,19 @@ export default {
       listItems: [
         {
           id: 'appearance',
-          label: 'Appearance: Light',
+          label: `Appearance: ${this.selectedOptions.theme.text}`,
           icon: 'sun',
           withSubMenu: true,
         },
         {
           id: 'language',
-          label: 'Language: English',
+          label: `Language: ${this.selectedOptions.language.text}`,
           icon: 'language',
           withSubMenu: true,
         },
         {
           id: 'location',
-          label: 'Location: Ukraine',
+          label: `Location: ${this.selectedOptions.location.text}`,
           icon: 'location',
           withSubMenu: true,
         },
@@ -85,7 +85,7 @@ export default {
         },
         {
           id: 'restricted_mode',
-          label: 'Restricted Mode: Off',
+          label: `Restricted Mode: ${this.selectedOptions.restrictedMode.text}`,
           icon: null,
           withSubMenu: true,
         },

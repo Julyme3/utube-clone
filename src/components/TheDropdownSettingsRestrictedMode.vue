@@ -15,7 +15,7 @@
       <input
         id="restrictedMode"
         type="checkbox"
-        :checked="selectedOptions.restrictedMode"
+        :checked="selectedOptions.restrictedMode.enabled"
         @input="selectOption"
       />
     </div>
@@ -33,9 +33,15 @@ export default {
   emits: ['select-menu', 'select-option'],
   methods: {
     selectOption(e) {
+      const enabled = e.target.checked;
+      const text = enabled ? 'On' : 'Off';
+
       this.$emit('select-option', {
         name: 'restrictedMode',
-        value: e.target.checked,
+        value: {
+          enabled,
+          text,
+        },
       });
     },
   },
