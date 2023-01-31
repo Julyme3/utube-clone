@@ -1,7 +1,11 @@
 <template>
   <div :class="classes">
     <ul>
-      <li v-for="result in results" :key="result" :class="itemClasses">
+      <li
+        v-for="(result, id) in results"
+        :key="result"
+        :class="getItemClasses(id)"
+      >
         {{ result }}
       </li>
     </ul>
@@ -12,7 +16,7 @@
 <script>
 export default {
   name: 'TheSearchResults',
-  props: ['results'],
+  props: ['results', 'activeResultId'],
   data() {
     return {
       classes: [
@@ -26,14 +30,6 @@ export default {
         'shadow-md',
         'pt-4',
       ],
-      itemClasses: [
-        'hover:bg-gray-100',
-        'text-black',
-        'px-3',
-        'py-1',
-        'select-none',
-        'truncate',
-      ],
       reportLinkClasses: [
         'w-full',
         'inline-block',
@@ -45,6 +41,18 @@ export default {
         'pr-2',
       ],
     };
+  },
+  methods: {
+    getItemClasses(resultId) {
+      return [
+        resultId === this.activeResultId ? 'bg-gray-100' : 'hover:bg-gray-100',
+        'text-black',
+        'px-3',
+        'py-1',
+        'select-none',
+        'truncate',
+      ];
+    },
   },
 };
 </script>
