@@ -14,25 +14,15 @@
 </template>
 
 <script>
-import DropdownSettingsHeader from './DropdownSettingsHeader.vue';
-import DropdownSettingsListItem from './DropdownSettingsListItem.vue';
+import dropdownSubmenu from '../mixins/dropdownSubmenu.js';
 export default {
   name: 'TheDropdownSettingsLanguage',
-  components: {
-    DropdownSettingsHeader,
-    DropdownSettingsListItem,
-  },
-  props: ['selectedOptions'],
-  emits: ['close', 'select-option'],
+  mixins: [dropdownSubmenu],
   data() {
     return {
       languages: ['English', 'Russian'],
+      optionName: 'language',
     };
-  },
-  methods: {
-    selectOption(language) {
-      this.$emit('select-option', { name: 'language', value: language });
-    },
   },
 };
 </script>

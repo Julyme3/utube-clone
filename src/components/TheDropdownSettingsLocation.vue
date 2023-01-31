@@ -14,25 +14,16 @@
 </template>
 
 <script>
-import DropdownSettingsHeader from './DropdownSettingsHeader.vue';
-import DropdownSettingsListItem from './DropdownSettingsListItem.vue';
+import dropdownSubmenu from '../mixins/dropdownSubmenu';
+
 export default {
   name: 'TheDropdownSettingsLocation',
-  components: {
-    DropdownSettingsHeader,
-    DropdownSettingsListItem,
-  },
-  props: ['selectedOptions'],
-  emits: ['close', 'select-option'],
+  mixins: [dropdownSubmenu],
   data() {
     return {
       locations: ['United States', 'Russia'],
+      optionName: 'location',
     };
-  },
-  methods: {
-    selectOption(location) {
-      this.$emit('select-option', { name: 'location', value: location });
-    },
   },
 };
 </script>
