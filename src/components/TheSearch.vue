@@ -19,9 +19,11 @@ import TheSearchResults from './TheSearchResults.vue';
 export default {
   name: 'TheSearch',
   components: { TheSearchResults, TheSearchButton, TheSearchInput },
+  props: ['searchQuery'],
+  emits: ['update-search-query'],
   data() {
     return {
-      query: '',
+      query: this.searchQuery,
       keywords: [
         'new york giants',
         'new york alicia keys',
@@ -58,6 +60,11 @@ export default {
   methods: {
     toggleSearchResults(isSearchInputActive) {
       this.isSearchResultsShown = isSearchInputActive && this.results.length;
+    },
+  },
+  watch: {
+    query(query) {
+      this.$emit('update-search-query', query);
     },
   },
 };
