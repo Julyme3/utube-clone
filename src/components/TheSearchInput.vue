@@ -1,10 +1,14 @@
 <template>
   <div class="relative w-full">
     <input
-      v-bind="$attrs"
       :value="query"
       :class="classes"
+      ref="input"
       @input="updateQuery($event.target.value)"
+      @focus="setState(true)"
+      @blur="setState(false)"
+      @keyup.esc="handleEsc"
+      @click="setState(true)"
       type="text"
       placeholder="Search"
     />
@@ -22,12 +26,11 @@
 import BaseIcon from './BaseIcon.vue';
 export default {
   name: 'TheSearchInput',
-  inheritAttrs: false,
   components: {
     BaseIcon,
   },
-  props: ['query'],
-  emits: ['update:query'],
+  props: ['query', 'hasResults'],
+  emits: ['update:query', 'change-state'],
   mounted() {
     if (window.innerWidth < 640) {
       this.$el.focus();
@@ -35,6 +38,7 @@ export default {
   },
   data() {
     return {
+      isActive: false,
       classes: [
         'w-full',
         'h-full',
@@ -52,6 +56,18 @@ export default {
   methods: {
     updateQuery(query) {
       this.$emit('update:query', query);
+      this.setState(true);
+    },
+    setState(state) {
+      this.isActive = state;
+      this.$emit('change-state', state);
+    },
+    handleEsc() {
+      if (this.isActive && this.hasResults) {
+        this.setState(false);
+      } else {
+        this.$refs.input.blur();
+      }
     },
   },
 };
