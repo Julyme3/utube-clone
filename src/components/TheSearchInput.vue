@@ -1,11 +1,12 @@
 <template>
   <div class="relative w-full">
     <input
+      v-bind="$attrs"
       :value="query"
+      :class="classes"
       @input="updateQuery($event.target.value)"
       type="text"
       placeholder="Search"
-      :class="classes"
     />
     <button
       v-show="query"
@@ -21,6 +22,7 @@
 import BaseIcon from './BaseIcon.vue';
 export default {
   name: 'TheSearchInput',
+  inheritAttrs: false,
   components: {
     BaseIcon,
   },
