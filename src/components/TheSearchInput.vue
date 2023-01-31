@@ -2,14 +2,14 @@
   <div class="relative w-full">
     <input
       :value="query"
-      @input="$emit('update:query', $event.target.value)"
+      @input="updateQuery($event.target.value)"
       type="text"
       placeholder="Search"
       :class="classes"
     />
     <button
       v-show="query"
-      @click="$emit('update:query', '')"
+      @click="updateQuery('')"
       class="absolute top-0 right-0 h-full px-3 focus:outline-none"
     >
       <BaseIcon name="x" class="w-5 w-5" />
@@ -46,6 +46,11 @@ export default {
         'focus:outline-none',
       ],
     };
+  },
+  methods: {
+    updateQuery(query) {
+      this.$emit('update:query', query);
+    },
   },
 };
 </script>
