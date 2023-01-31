@@ -14,7 +14,7 @@
     />
     <button
       v-show="query"
-      @click="updateQuery('')"
+      @click="clear"
       class="absolute top-0 right-0 h-full px-3 focus:outline-none"
     >
       <BaseIcon name="x" class="w-5 w-5" />
@@ -33,8 +33,10 @@ export default {
   emits: ['update:query', 'change-state'],
   mounted() {
     if (window.innerWidth < 640) {
-      this.$el.focus();
+      this.$refs.input.focus();
     }
+
+    document.addEventListener('keydown', this.handleKeydown);
   },
   data() {
     return {
@@ -62,11 +64,24 @@ export default {
       this.isActive = state;
       this.$emit('change-state', state);
     },
+    clear() {
+      this.updateQuery('');
+      this.$refs.input.focus();
+    },
     handleEsc() {
       if (this.isActive && this.hasResults) {
         this.setState(false);
       } else {
         this.$refs.input.blur();
+      }
+    },
+    handleKeydown(e) {
+      const isInputFocused = this.$refs.input === document.activeElement;
+
+      if (!isInputFocused && e.code === 'Slash') {
+        e.preventDefault();
+
+        this.$refs.input.focus();
       }
     },
   },
