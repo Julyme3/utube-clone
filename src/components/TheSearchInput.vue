@@ -8,6 +8,7 @@
       @focus="setState(true)"
       @keyup.esc="handleEsc"
       @click.stop="setState(true)"
+      @keydown.enter="$emit('enter')"
       type="text"
       placeholder="Search"
     />
@@ -29,7 +30,7 @@ export default {
     BaseIcon,
   },
   props: ['query', 'hasResults'],
-  emits: ['update:query', 'change-state'],
+  emits: ['update:query', 'change-state', 'enter'],
   mounted() {
     if (window.innerWidth < 640) {
       this.$refs.input.focus();

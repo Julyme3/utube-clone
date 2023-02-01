@@ -7,7 +7,7 @@
         :class="getItemClasses(id)"
         @mouseenter="$emit('search-result-mouseenter', id)"
         @mouseleave="$emit('search-result-mouseleave')"
-        @click.stop="$emit('search-result-click', id)"
+        @click.stop="$emit('search-result-click')"
       >
         {{ result }}
       </li>
