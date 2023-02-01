@@ -4,9 +4,11 @@
       <TheSearchInput
         v-model:query="query"
         :has-results="results.length"
+        @update:query="updateSearchResults"
         @change-state="toggleSearchResults"
         @keyup.up="handlePreviousSearchResult"
         @keyup.down="handleNextSearchResult"
+        @keydown.up.prevent
       />
       <TheSearchResults
         v-show="isSearchResultsShown"
@@ -29,7 +31,9 @@ export default {
   emits: ['update-search-query'],
   data() {
     return {
+      activeQuery: this.searchQuery,
       query: this.searchQuery,
+      results: [],
       activeSearchResultId: null,
       keywords: [
         'new york giants',
@@ -51,20 +55,23 @@ export default {
     };
   },
   computed: {
-    results() {
-      if (!this.query) {
-        return [];
-      }
-
-      return this.keywords.filter((result) => {
-        return result.includes(this.trimmedQuery);
-      });
-    },
     trimmedQuery() {
       return this.query.replace(/\s+/g, ' ');
     },
   },
   methods: {
+    updateSearchResults() {
+      this.activeSearchResultId = null;
+      this.activeQuery = this.query;
+
+      if (!this.query) {
+        return [];
+      }
+
+      this.results = this.keywords.filter((result) => {
+        return result.includes(this.trimmedQuery);
+      });
+    },
     toggleSearchResults(isSearchInputActive) {
       this.isSearchResultsShown = isSearchInputActive && this.results.length;
     },
@@ -90,6 +97,8 @@ export default {
       } else {
         this.activeSearchResultId--;
       }
+
+      this.updateQueryWithSearchResult();
     },
     makeNextSearchResultActive() {
       if (this.activeSearchResultId === null) {
@@ -99,6 +108,15 @@ export default {
       } else {
         this.activeSearchResultId++;
       }
+
+      this.updateQueryWithSearchResult();
+    },
+    updateQueryWithSearchResult() {
+      const hasActiveSearchResult = this.activeSearchResultId !== null;
+
+      this.query = hasActiveSearchResult
+        ? this.results[this.activeSearchResultId]
+        : this.activeQuery;
     },
   },
   watch: {
