@@ -5,6 +5,9 @@
         v-for="(result, id) in results"
         :key="result"
         :class="getItemClasses(id)"
+        @mouseenter="$emit('search-result-mouseenter', id)"
+        @mouseleave="$emit('search-result-mouseleave')"
+        @click.stop="$emit('search-result-click', id)"
       >
         {{ result }}
       </li>
@@ -17,6 +20,11 @@
 export default {
   name: 'TheSearchResults',
   props: ['results', 'activeResultId'],
+  emits: [
+    'search-result-mouseenter',
+    'search-result-mouseleave',
+    'search-result-click',
+  ],
   data() {
     return {
       classes: [
@@ -45,7 +53,7 @@ export default {
   methods: {
     getItemClasses(resultId) {
       return [
-        resultId === this.activeResultId ? 'bg-gray-100' : 'hover:bg-gray-100',
+        resultId === this.activeResultId ? 'bg-gray-100' : 'bg-transparent',
         'text-black',
         'px-3',
         'py-1',

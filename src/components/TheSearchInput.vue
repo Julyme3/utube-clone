@@ -6,9 +6,8 @@
       ref="input"
       @input="updateQuery($event.target.value)"
       @focus="setState(true)"
-      @blur="setState(false)"
       @keyup.esc="handleEsc"
-      @click="setState(true)"
+      @click.stop="setState(true)"
       type="text"
       placeholder="Search"
     />
