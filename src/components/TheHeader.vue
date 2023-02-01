@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import { computed } from 'vue';
 import TheDropdownApps from './TheDropdownApps.vue';
 import TheDropdownSettings from './TheDropdownSettings.vue';
 import LogoMain from './LogoMain.vue';
@@ -78,6 +79,11 @@ export default {
   },
   emits: {
     toggleSidebar: null,
+  },
+  provide() {
+    return {
+      isMobileSearchActive: computed(() => this.isMobileSearchActive),
+    };
   },
   data() {
     return {
