@@ -31,12 +31,10 @@ import TheSearchResults from './TheSearchResults.vue';
 export default {
   name: 'TheSearch',
   components: { TheSearchResults, TheSearchButton, TheSearchInput },
-  props: ['searchQuery'],
-  emits: ['update-search-query'],
   data() {
     return {
-      activeQuery: this.searchQuery,
-      query: this.searchQuery,
+      activeQuery: '',
+      query: '',
       results: [],
       activeSearchResultId: null,
       keywords: [
@@ -59,10 +57,8 @@ export default {
     };
   },
   mounted() {
-    document.addEventListener('click', this.handleClick);
-  },
-  beforeUnmount() {
-    document.removeEventListener('click', this.handleClick);
+    window.addEventListener('click', this.handleClickAndResize);
+    window.addEventListener('resize', this.handleClickAndResize);
   },
   computed: {
     trimmedQuery() {
@@ -136,13 +132,8 @@ export default {
       this.updateSearchResults();
       this.toggleSearchResults(false);
     },
-    handleClick() {
+    handleClickAndResize() {
       this.toggleSearchResults(false);
-    },
-  },
-  watch: {
-    query(query) {
-      this.$emit('update-search-query', query);
     },
   },
 };

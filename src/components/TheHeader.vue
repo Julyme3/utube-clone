@@ -17,17 +17,11 @@
         <LogoMain />
       </div>
     </div>
-    <TheSearchMobile v-if="isMobileSearchShown" @close="closeMobileSearch">
-      <TheSearch
-        :search-query="searchQuery"
-        @update-search-query="searchQuery = $event"
-      />
-    </TheSearchMobile>
-    <TheSearchMain v-else
-      ><TheSearch
-        :search-query="searchQuery"
-        @update-search-query="searchQuery = $event"
-    /></TheSearchMain>
+    <TheSearchWrapper
+      v-show="isSearchShown"
+      :is-small-screen="isSmallScreen"
+      @close="closeMobileSearch"
+    />
     <div
       :class="[
         'flex',
@@ -68,14 +62,11 @@ import TheSearch from './TheSearch.vue';
 import ButtonLogin from './ButtonLogin.vue';
 import BaseIcon from './BaseIcon.vue';
 import BaseTooltip from './BaseTooltip.vue';
-import TheSearchMobile from './TheSearchMobile.vue';
-import TheSearchMain from './TheSearchMain.vue';
+import TheSearchWrapper from './TheSearchWrapper.vue';
 
 export default {
   name: 'TheHeader',
   components: {
-    TheSearchMain,
-    TheSearchMobile,
     BaseTooltip,
     BaseIcon,
     ButtonLogin,
@@ -83,13 +74,13 @@ export default {
     LogoMain,
     TheDropdownSettings,
     TheDropdownApps,
+    TheSearchWrapper,
   },
   emits: {
     toggleSidebar: null,
   },
   data() {
     return {
-      searchQuery: '',
       isSmallScreen: false,
       isMobileSearchActive: false,
       classes: [
@@ -104,6 +95,9 @@ export default {
   computed: {
     isMobileSearchShown() {
       return this.isSmallScreen && this.isMobileSearchActive;
+    },
+    isSearchShown() {
+      return this.isMobileSearchShown || !this.isSmallScreen;
     },
   },
   mounted() {
