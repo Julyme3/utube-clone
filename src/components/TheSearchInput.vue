@@ -35,9 +35,6 @@ export default {
   mounted() {
     document.addEventListener('keydown', this.handleKeydown);
   },
-  beforeUnmount() {
-    document.removeEventListener('keydown', this.handleKeydown);
-  },
   data() {
     return {
       isActive: false,
