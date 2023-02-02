@@ -1,9 +1,5 @@
 <template>
-  <div
-    tabindex="-1"
-    @keydown.esc="close"
-    class="fixed inset-0 z-10 focus:outline-none"
-  >
+  <div tabindex="-1" @keydown.esc="close" :class="classes">
     <transition
       appear
       enter-active-class="ease-out duration-200"
@@ -19,7 +15,7 @@
         class="fixed inset-0 bg-black bg-opacity-80"
       ></div>
     </transition>
-    <div v-if="isOpen" class="relative bg-white max-w-sm mx-auto my-8">
+    <div v-if="isOpen" class="relative bg-white max-w-sm m-8">
       <div class="p-2 text-right">
         <BaseModalButtonClose @click="close" />
       </div>
@@ -47,6 +43,15 @@ export default {
   data() {
     return {
       isOpen: true,
+      classes: [
+        'fixed',
+        'inset-0',
+        'z-30',
+        'focus:outline-none',
+        'flex',
+        'justify-center',
+        'items-start',
+      ],
     };
   },
   mounted() {
