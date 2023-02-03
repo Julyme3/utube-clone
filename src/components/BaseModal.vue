@@ -16,7 +16,7 @@
       ></div>
     </transition>
     <div v-if="isOpen" class="relative bg-white w-2/3 m-8">
-      <div class="p-2 text-right">
+      <div v-if="withCloseButton" class="p-2 text-right">
         <BaseModalButtonClose @click="close" />
       </div>
       <div class="p-6">
@@ -33,6 +33,12 @@ export default {
   name: 'BaseModal',
   components: {
     BaseModalButtonClose,
+  },
+  props: {
+    withCloseButton: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['close'],
   data() {
