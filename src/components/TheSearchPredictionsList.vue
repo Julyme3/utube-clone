@@ -5,7 +5,7 @@
     class="flex items-center"
   >
     <BaseCheckbox
-      :id="index"
+      :id="`search-prediction-${index}`"
       v-model="selectedSearchPredictions"
       :valueInput="label"
     >

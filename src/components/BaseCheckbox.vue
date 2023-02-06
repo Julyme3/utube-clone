@@ -15,7 +15,7 @@
 export default {
   name: 'BaseCheckbox',
   props: {
-    id: Number,
+    id: String,
     modelValue: Array,
     valueInput: String,
   },
