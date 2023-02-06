@@ -4,22 +4,23 @@
     :key="label"
     class="flex items-center"
   >
-    <input
-      type="checkbox"
-      class="h-5 w-5 cursor-pointer"
+    <BaseCheckbox
       :id="index"
-      :value="label"
       v-model="selectedSearchPredictions"
-    />
-    <label :for="index" class="pl-4 cursor-pointer flex-grow">
+      :valueInput="label"
+    >
       {{ label }}
-    </label>
+    </BaseCheckbox>
   </div>
 </template>
 
 <script>
+import BaseCheckbox from './BaseCheckbox.vue';
 export default {
   name: 'TheSearchPredictionsList',
+  components: {
+    BaseCheckbox,
+  },
   props: {
     searchPredictions: Array,
     modelValue: Array,
