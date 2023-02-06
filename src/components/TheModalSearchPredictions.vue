@@ -7,6 +7,11 @@
         v-model="selectedSearchPredictions"
       />
     </div>
+    <p class="text-xs text-gray-600 mt-5">The selected predictions are:</p>
+    <TheSearchPredictionCategories
+      :search-prediction-categories="searchPredictionCategories"
+      v-model="selectedSearchPredictionCategory"
+    />
     <template #footer="slotProps">
       <BaseButton @click="slotProps.close" class="ml-auto">Cancel</BaseButton>
       <BaseButton class="ml-1 text-gray-400 cursor-auto" disabled
@@ -20,9 +25,11 @@
 import BaseModal from './BaseModal.vue';
 import BaseButton from './BaseButton.vue';
 import TheSearchPredictionsList from './TheSearchPredictionsList.vue';
+import TheSearchPredictionCategories from './TheSearchPredictionCategories.vue';
 export default {
   name: 'TheModalSearchPredictions',
   components: {
+    TheSearchPredictionCategories,
     TheSearchPredictionsList,
     BaseModal,
     BaseButton,
@@ -33,6 +40,14 @@ export default {
   data() {
     return {
       selectedSearchPredictions: [],
+      selectedSearchPredictionCategory: null,
+      searchPredictionCategories: [
+        'Hateful',
+        'Sexually Explicit',
+        'Violent',
+        'Dangerous and harmful activity',
+        'Other',
+      ],
     };
   },
 };
