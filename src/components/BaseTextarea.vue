@@ -4,7 +4,7 @@
       v-bind="$attrs"
       @input="updateTextarea"
       placeholder="Provide additional details (optional)"
-      class="border rounded-sm pt-2 pb-5 px-2 resize-none w-full focus:outline-none"
+      class="border rounded-sm pt-2 pb-5 px-2 resize-none w-full focus:outline-none peer"
     />
     <BaseTextareaCounter>{{ counter }}</BaseTextareaCounter>
   </div>
