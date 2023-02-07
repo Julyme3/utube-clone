@@ -13,7 +13,7 @@
       v-model="selectedSearchPredictionCategory"
     />
     <div class="text-black text-sm mt-6">
-      <BaseTextarea v-model="searchPredictionDetails" />
+      <BaseTextarea v-model="searchPredictionDetails" :limit="100" />
     </div>
     <template #footer="slotProps">
       <BaseButton @click="slotProps.close" class="ml-auto">Cancel</BaseButton>
