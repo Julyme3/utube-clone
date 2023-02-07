@@ -3,8 +3,8 @@
     type="checkbox"
     class="h-5 w-5 cursor-pointer"
     :id="id"
-    :value="valueInput"
-    v-model="selectedSearchPredictions"
+    v-bind="$attrs"
+    @input="updateCheckbox"
   />
   <label :for="id" class="pl-4 cursor-pointer flex-grow">
     <slot v-if="$slots.default" />
@@ -17,20 +17,20 @@ export default {
   props: {
     id: String,
     modelValue: Array,
-    valueInput: String,
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      selectedSearchPredictions: this.modelValue,
-    };
-  },
-  watch: {
-    selectedSearchPredictions() {
-      this.$emit('update:modelValue', [
-        ...this.modelValue,
-        ...this.selectedSearchPredictions,
-      ]);
+  methods: {
+    updateCheckbox(e) {
+      const value = e.target.value;
+      let checkboxes = [];
+
+      if (this.modelValue.includes(value)) {
+        checkboxes = this.modelValue.filter((el) => el !== value);
+      } else {
+        checkboxes = [...this.modelValue, value];
+      }
+
+      this.$emit('update:modelValue', checkboxes);
     },
   },
 };

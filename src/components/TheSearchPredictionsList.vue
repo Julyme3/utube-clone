@@ -7,7 +7,7 @@
     <BaseCheckbox
       :id="`search-prediction-${index}`"
       v-model="selectedSearchPredictions"
-      :valueInput="label"
+      :value="label"
     >
       {{ label }}
     </BaseCheckbox>
