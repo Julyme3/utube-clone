@@ -26,14 +26,14 @@ export default {
     modelValue: null | String,
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      selectedValue: this.modelValue,
-    };
-  },
-  watch: {
-    selectedValue() {
-      this.$emit('update:modelValue', this.selectedValue);
+  computed: {
+    selectedValue: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
     },
   },
 };

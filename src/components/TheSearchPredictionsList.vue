@@ -26,14 +26,14 @@ export default {
     modelValue: Array,
   },
   emits: ['update:modelValue'],
-  data() {
-    return {
-      selectedSearchPredictions: this.modelValue,
-    };
-  },
-  watch: {
-    selectedSearchPredictions() {
-      this.$emit('update:modelValue', this.selectedSearchPredictions);
+  computed: {
+    selectedSearchPredictions: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
     },
   },
 };

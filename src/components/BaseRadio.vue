@@ -4,7 +4,7 @@
     class="h-5 w-5 cursor-pointer"
     :id="id"
     v-bind="$attrs"
-    @input="updateRadio"
+    v-model="selectedValue"
   />
   <label v-if="$slots.default" :for="id" class="pl-4 cursor-pointer flex-grow"
     ><slot
@@ -19,9 +19,14 @@ export default {
     modelValue: String,
   },
   emits: ['update:modelValue'],
-  methods: {
-    updateRadio(e) {
-      this.$emit('update:modelValue', e.target.value);
+  computed: {
+    selectedValue: {
+      get() {
+        return this.modelValue;
+      },
+      set(value) {
+        this.$emit('update:modelValue', value);
+      },
     },
   },
 };
